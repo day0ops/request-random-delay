@@ -6,7 +6,6 @@ import (
 	"go.uber.org/zap"
 	"math/rand"
 	"net/http"
-	"strconv"
 	"time"
 
 	c "github.com/day0ops/request-random-delay/pkg/config"
@@ -49,20 +48,15 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) index(w http.ResponseWriter, r *http.Request) {
-	baseDelay, err := strconv.Atoi(c.BaseDelay)
-	if err != nil {
-		panic(err)
-	}
-
 	randomDelay := rand.Intn(100)
-	totalDelay := time.Duration(baseDelay+randomDelay) * time.Millisecond
+	totalDelay := time.Duration(c.GetBaseDelay()+randomDelay) * time.Millisecond
 	time.Sleep(totalDelay)
 
-	responseMessage := fmt.Sprintf("Response from server after %d ms", totalDelay.Milliseconds())
+	responseMessage := fmt.Sprintf("Response from server %s after %d ms", c.GetServerId(), totalDelay.Milliseconds())
 	m := Resp{Message: responseMessage}
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	err = json.NewEncoder(w).Encode(m)
+	err := json.NewEncoder(w).Encode(m)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("error building the response, %v", err), http.StatusInternalServerError)
 		return

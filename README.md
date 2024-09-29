@@ -9,3 +9,10 @@ This HTTP server exposes APIs to simulate random delays. Useful to test the Side
   - The images get pushed to `australia-southeast1-docker.pkg.dev/field-engineering-apac/public-repo` but you can override this with the env var ``
 - Run make help for all the build directives.
 
+## Possible Configuration
+
+| Env        | Description                                                                                  | Default |
+|:-----------|:---------------------------------------------------------------------------------------------|:---|
+| `BASE_DELAY`| Base value to generate the random delay, final delay is base value + random value,           | 0 |
+| `SERVER_ID`| A friendly server id                                                                         | |
+| `LOG_LEVEL`| To set the default log level ||
