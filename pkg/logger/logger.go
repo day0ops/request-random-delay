@@ -3,11 +3,12 @@ package logger
 import (
 	"context"
 	"fmt"
-	"github.com/day0ops/request-random-delay/pkg/config"
-	"github.com/day0ops/request-random-delay/pkg/version"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"sync"
+
+	"github.com/day0ops/request-random-delay/pkg/config"
+	"github.com/day0ops/request-random-delay/pkg/version"
 )
 
 type ctxKey struct{}
